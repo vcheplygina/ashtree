@@ -46,20 +46,21 @@ def grow_from(tips, param):
   all_angles = param['angles']  
 
   # mutate the tips tibble
-  new_tips = tips.copy()
+  new_growth = tips.copy()
   
-  for i, new_growth in new_tips.iterrows():
+  #for i, new_growth in new_tips.iterrows():
       
-      new_growth['old_x'] = new_growth['new_x']  # begin where last seg ended
-      new_growth['old_y'] = new_growth['new_y']     # begin where last seg ended
+  new_growth['old_x'] = new_growth['new_x']  # begin where last seg ended
+  new_growth['old_y'] = new_growth['new_y']     # begin where last seg ended
      
-      new_growth['scale'] = helpers.adjust_scale(new_growth['scale'], all_scales)    # change segment scale
-      new_growth['angle'] = helpers.adjust_angle(new_growth['angle'], all_angles)   # change segment angle
+  new_growth['scale'] = helpers.adjust_scale(new_growth['scale'], all_scales)    # change segment scale
+  new_growth['angle'] = helpers.adjust_angle(new_growth['angle'], all_angles)   # change segment angle
       
-      new_growth['new_x'] = helpers.adjust_x(new_growth['old_x'], new_growth['scale'], new_growth['angle'])
-      new_growth['new_y'] = helpers.adjust_y(new_growth['old_y'], new_growth['scale'], new_growth['angle'])
+  new_growth['new_x'] = helpers.adjust_x(new_growth['old_x'], new_growth['scale'], new_growth['angle'])
+  new_growth['new_y'] = helpers.adjust_y(new_growth['old_y'], new_growth['scale'], new_growth['angle'])
+      
 
-  return new_tips 
+  return new_growth
  
     
 '''
@@ -69,7 +70,7 @@ appends branches to existing DF
 '''
 def grow_multi(tips, param):
     
-    branches = tips.copy()
+    branches = pd.DataFrame()
     
     for i in np.arange(1, param['splits']):
         branch = grow_from(tips, param)

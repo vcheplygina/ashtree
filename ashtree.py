@@ -12,17 +12,19 @@ import workers
 
     
 param = {'seed': 3,
-        'cycles': 3,
-        'splits': 2,
+        'cycles': 2,
+        'splits': 3,
         'scales': [0.5, 0.8, 0.9, 0.95],
-        'angles': [-10, -5, 0, 5, 15, 20, 25]
+        'angles': [-10, -5, 5, 15, 20, 25]
         }
 
 
 t = workers.grow_tree(param)
 workers.draw_tree(t)
 
-
+#test_grow_sapling()
+#test_grow_from()
+#test_grow_multi()
     
 
 def test_grow_sapling():
@@ -33,20 +35,22 @@ def test_grow_sapling():
 def test_grow_from():
     s = workers.grow_sapling()
     t = workers.grow_from(s,param)
-    
-    tree = s.append(t)    
+  
+    tree = s.append(t)
     
     print(tree.head())
     workers.draw_tree(tree)
     
     
 def test_grow_multi():
-    s = workers.grow_sapling()
-    b = workers.grow_multi(s,param)
     
-    t = workers.grow_from(b,param)
-       
-    #print(tree.head())
-    workers.draw_tree(t)
+    s = workers.grow_sapling()
+    
+    b = workers.grow_multi(s,param)
+     
+    tree = s.append(b)    
+    
+    print(tree.head())
+    workers.draw_tree(tree)
     
     
