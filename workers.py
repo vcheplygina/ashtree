@@ -119,5 +119,6 @@ def draw_tree(tree):
 
 
     # Make things pretty 
+    plt.axis('off')
     plt.show()
     

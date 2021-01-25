@@ -7,6 +7,8 @@ Created on Mon Jan 25 10:44:28 2021
 
 import workers
 import numpy as np
+import random
+
 
 #test_grow_sapling()
 
@@ -18,6 +20,8 @@ param = {'seed': 3,
         'angles': [-10, -5, 5, 15, 20, 25]
         }
 
+
+random.seed(param['seed'])
 
 t = workers.grow_tree(param)
 workers.draw_tree(t)
