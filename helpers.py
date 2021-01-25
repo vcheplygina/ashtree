@@ -15,15 +15,16 @@ import numpy as np
 
 # Adjusts the length of a segment
 def adjust_scale(s, scales):
-    s2 = sample(scales, 1) 
-    s3 = s * s2[0]
-    print(s3)
-    return s3
+    s = np.array(s)                     #a stupid Python thing I guess I don't have a better solution for
+    s2 = s * sample(scales, s.size) 
+    
+    return s2
     
 # Adjusts the orientation of a segment
 def adjust_angle(a, angles):
-    a = a + sample(angles, 1)
-    return a[0]
+    a = np.array(a)
+    a = a + sample(angles, a.size)
+    return a
     
 
 # Adjusts the x co-ordinate

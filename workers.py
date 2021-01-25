@@ -23,7 +23,7 @@ def grow_sapling():
             'new_x': [0], # sapling doesn't grow horizontally
             'new_y': [1],  # sapling does grow vertically
             'angle': [90], # angle from horizontal is 90 degrees
-            'scale': [1]  # length of the sapling is 1
+            'scale': [1.0]  # length of the sapling is 1
             }
     sapling = pd.DataFrame(data)
     return sapling
@@ -45,7 +45,7 @@ def grow_from(tips, param):
   all_scales = param['scales'] 
   all_angles = param['angles']  
 
-  # mutate the tips tibble
+  # make a copy to adjust the parameters
   new_growth = tips.copy()
   
   #for i, new_growth in new_tips.iterrows():
@@ -66,17 +66,18 @@ def grow_from(tips, param):
 '''
 grow one tip into multiple new tips (or branches) -----------------------
 
-appends branches to existing DF
+creates branches but does ot append them to tree
 '''
 def grow_multi(tips, param):
     
-    branches = pd.DataFrame()
+    new_tips = pd.DataFrame()
     
-    for i in np.arange(1, param['splits']):
-        branch = grow_from(tips, param)
-        branches = branches.append(branch)
+    for i, tip in tips.iterrows():
+        for j in np.arange(1, param['splits']):
+            branch = grow_from(tip, param)
+            new_tips = new_tips.append(branch)
     
-    return branches
+    return new_tips
 
 '''
 accumulate (multi-tip) growth over several cycles -----------------------
@@ -86,11 +87,18 @@ appends branches
 '''
 def grow_tree(param):
     
-    tree = grow_sapling()
+    tree = pd.DataFrame()
+    
+    sapling = grow_sapling()
+    tree = tree.append(sapling)
+        
+    new_tips = grow_multi(sapling, param)
+    tree = tree.append(new_tips)  
     
     for i in np.arange(1,param['cycles']):
-        multi = grow_multi(tree, param)
-        tree = tree.append(multi)
+        
+        new_tips = grow_multi(new_tips, param)
+        tree = tree.append(new_tips)
         
     print(tree.head())
     return tree
