@@ -1,6 +1,10 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
+# Ashtree - Python version
+
+This is an attempt to translate the original ashtree by Danielle Navarro (<https://github.com/djnavarro/ashtree>) to Python. 
+
 # Ashtree
 
 The `ashtree` system is a simplified version of the `flametree` package
